@@ -22,6 +22,8 @@ class PostgresStorage
       @settings.table = 'files'
     if not @settings.url
       @settings.url = generateUrl @settings
+    if 'function' == typeof @settings.getFilename
+      @getFilename = @settings.getFilename
 
   connect: (callback) ->
     self = @
@@ -75,6 +77,10 @@ class PostgresStorage
           container: container
           filename: filename
           mimetype: mimetype
+          req: req
+          res: res
+        if self.getFilename
+          options.getFilename = self.getFilename
         self.uploadFile container, file, options, (err, res) ->
           return reject err if err
           resolve res
@@ -87,6 +93,11 @@ class PostgresStorage
 
   uploadFile: (container, file, options, callback = (-> return)) ->
     self = @
+
+    if 'function' == typeof options.getFilename
+      options.originalFilename = options.filename;
+      options.filename = options.getFilename(options.container, options.originalFilename, options.mimetype, options.req, options.res)
+
     handleError = (err) ->
       self.db.query 'ROLLBACK TRANSACTION', ->
         callback err

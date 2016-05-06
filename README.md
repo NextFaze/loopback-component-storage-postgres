@@ -44,7 +44,7 @@ Edit you datasources.json and add the following part
 }
 ```
 
-And the you can use it as a datasource of your model.
+And then you can use it as a datasource of your model.
 
 ## API
 
@@ -52,7 +52,7 @@ Description                                                   | Container model 
 --------------------------------------------------------------|-------------------------------------------|--------------------------------------------
 List all containers                                           | getContainers(callback)                   | GET /api/\<model>
 Get information about specified container                     | getContainer(container, callback)         | GET /api/\<model>/:container
-Create a new container                                        | createContainer(options, callback)        | PORT /api/\<model>
+Create a new container                                        | createContainer(options, callback)        | POST /api/\<model>
 Delete specified container                                    | destroyContainer(options, callback)       | DELETE /api/\<model>/:container
 List all files within specified container                     | getFiles(container, callback)             | GET /api/\<model>/:container/files
 Get information for specified file within specified container | getFile(container, file, callback)        | GET /api/\<model>/:container/files/:file
